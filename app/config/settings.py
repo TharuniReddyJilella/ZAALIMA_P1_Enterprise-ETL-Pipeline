@@ -1,19 +1,27 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 
-class Settings(BaseSettings):
-    APP_NAME: str = "Enterprise ETL Pipeline"
-    APP_VERSION: str = "1.0.0"
+class Settings:
+    APP_ENV = os.getenv("APP_ENV")
 
-    STRIPE_API_KEY: str = ""
-    SALESFORCE_API_KEY: str = ""
+    STRIPE_API_KEY = os.getenv("STRIPE_API_KEY")
 
-    DATABASE_URL: str = ""
+    SALESFORCE_CLIENT_ID = os.getenv("SALESFORCE_CLIENT_ID")
+    SALESFORCE_CLIENT_SECRET = os.getenv("SALESFORCE_CLIENT_SECRET")
+    SALESFORCE_USERNAME = os.getenv("SALESFORCE_USERNAME")
+    SALESFORCE_PASSWORD = os.getenv("SALESFORCE_PASSWORD")
 
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        extra="ignore"
-    )
+    DATABASE_URL = os.getenv("DATABASE_URL")
+
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_REGION = os.getenv("AWS_REGION")
+    S3_BUCKET = os.getenv("S3_BUCKET")
+
+    LOG_LEVEL = os.getenv("LOG_LEVEL")
 
 
 settings = Settings()
