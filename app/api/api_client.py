@@ -1,6 +1,7 @@
 import requests
+import time
 from tenacity import retry, stop_after_attempt, wait_exponential
-
+from app.config.settings import settings
 from app.logger.logger import logger
 
 
@@ -13,6 +14,7 @@ class APIClient:
         wait=wait_exponential(multiplier=1, min=2, max=10),
     )
     def get(self, endpoint: str, params=None):
+        time.sleep(1)
         url = f"{self.base_url}{endpoint}"
 
         logger.info(f"GET {url}")
@@ -20,7 +22,7 @@ class APIClient:
         response = requests.get(
             url,
             params=params,
-            timeout=30,
+            timeout=settings.REQUEST_TIMEOUT,
         )
 
         response.raise_for_status()
