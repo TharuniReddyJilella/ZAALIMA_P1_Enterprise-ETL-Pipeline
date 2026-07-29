@@ -1,16 +1,21 @@
-from app.api.api_client import APIClient
+from app.extract.stripe_extractor import StripeExtractor
+from app.utils.json_writer import JSONWriter
 
 
 def main():
-    client = APIClient(
-        "https://jsonplaceholder.typicode.com"
+    extractor = StripeExtractor()
+
+    customers = extractor.extract_customers(
+        page=1,
+        limit=5,
     )
 
-    users = client.get("/users")
+    print(f"Fetched {len(customers)} customers")
 
-    print(f"Fetched {len(users)} users")
-
-    print(users[0])
+    JSONWriter.save(
+        customers,
+        "stripe_customers_page1.json",
+    )
 
 
 if __name__ == "__main__":
