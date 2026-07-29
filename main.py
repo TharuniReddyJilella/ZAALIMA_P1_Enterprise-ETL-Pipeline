@@ -1,4 +1,5 @@
 from app.extract.stripe_extractor import StripeExtractor
+from app.transform.customer_transformer import CustomerTransformer
 from app.utils.json_writer import JSONWriter
 
 
@@ -10,11 +11,15 @@ def main():
         limit=5,
     )
 
-    print(f"Fetched {len(customers)} customers")
-
     JSONWriter.save(
         customers,
         "stripe_customers_page1.json",
+    )
+
+    transformer = CustomerTransformer()
+
+    transformer.transform(
+        "data/raw/stripe_customers_page1.json"
     )
 
 
