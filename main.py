@@ -1,16 +1,16 @@
-from app.extract.stripe_extractor import StripeExtractor
-from app.utils.file_writer import FileWriter
+from app.api.api_client import APIClient
 
 
 def main():
+    client = APIClient(
+        "https://jsonplaceholder.typicode.com"
+    )
 
-    extractor = StripeExtractor()
+    users = client.get("/users")
 
-    users = extractor.extract_users()
+    print(f"Fetched {len(users)} users")
 
-    filename = FileWriter.save_json(users, "users")
-
-    print(f"Saved to: {filename}")
+    print(users[0])
 
 
 if __name__ == "__main__":
