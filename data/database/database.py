@@ -14,6 +14,9 @@ SessionLocal = sessionmaker(
     autocommit=False,
 )
 Base = declarative_base()
+from app.models.customer_model import Customer
+
+Base.metadata.create_all(bind=engine)
 
 if __name__ == "__main__":
     session = SessionLocal()
